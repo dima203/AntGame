@@ -35,6 +35,8 @@ public class AntMovement : MonoBehaviour
     public void OnTriggerStay2D(Collider2D collider)
     {
         if (!_goHome) {
+            if (_findTarget)
+                return;
             if (collider.TryGetComponent<Food>(out Food food)) {
                 _findTarget = true;
                 transform.rotation = Quaternion.FromToRotation(Vector3.up, collider.transform.position - transform.position);
@@ -86,6 +88,11 @@ public class AntMovement : MonoBehaviour
                 _currentDistance = 0f;
             }
         }
+        
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
         if (collision.collider.tag == "Border") {
             transform.Rotate(new Vector3(0, 0, 180));
         }
