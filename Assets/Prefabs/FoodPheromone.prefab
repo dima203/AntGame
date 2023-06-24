@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FoodPheromone
       objectReference: {fileID: 0}
+    - target: {fileID: 2324608160048715899, guid: fa955126cc39b168aab88be147802720, type: 3}
+      propertyPath: m_TagString
+      value: FoodPheromone
+      objectReference: {fileID: 0}
     - target: {fileID: 7131863759585518708, guid: fa955126cc39b168aab88be147802720, type: 3}
       propertyPath: m_RootOrder
       value: 0
