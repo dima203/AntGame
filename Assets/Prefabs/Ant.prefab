@@ -123,7 +123,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 4
+  m_Radius: 8
 --- !u!114 &8318999898580739184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,7 +139,7 @@ MonoBehaviour:
   _rigidbody: {fileID: 2661570291924712629}
   _speed: 1
   _pheromoneSpawner: {fileID: 2410278653079196965}
-  _pheromoneSpawnDelay: 1
+  _pheromoneSpawnDelay: 2
 --- !u!50 &2661570291924712629
 Rigidbody2D:
   serializedVersion: 4

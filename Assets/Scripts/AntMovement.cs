@@ -8,7 +8,7 @@ public class AntMovement : MonoBehaviour
     [SerializeField] private float _pheromoneSpawnDelay = 1f;
 
     private bool _goHome = false;
-    private bool _findTarget = false;
+    private GameObject _target = null;
     private float _bestPheromoneDistance = -1f;
     private float _currentDistance = 0f;
     private float _currentTime = 0f;
@@ -17,9 +17,8 @@ public class AntMovement : MonoBehaviour
     private void Update()
     {
         _rigidbody.velocity = transform.up * _speed;
-        //_rigidbody.AddForce(transform.up * _speed);
         _currentDistance += _speed * Time.deltaTime;
-        if (!_findTarget)
+        if (_target == null)
             transform.Rotate(0, 0, Random.Range(-1f, 1f));
 
         _currentTime -= Time.deltaTime;
@@ -35,14 +34,14 @@ public class AntMovement : MonoBehaviour
     public void OnTriggerStay2D(Collider2D collider)
     {
         if (!_goHome) {
-            if (_findTarget)
+            if (_target != null)
                 return;
             if (collider.TryGetComponent<Food>(out Food food)) {
-                _findTarget = true;
+                _target = collider.gameObject;
                 transform.rotation = Quaternion.FromToRotation(Vector3.up, collider.transform.position - transform.position);
                 _bestPheromoneDistance = -1f;
             }
-            if (_findTarget) 
+            if (_target != null) 
                 return;
             if (collider.gameObject.tag == "FoodPheromone") {
                 Pheromone pheromone = collider.GetComponent<Pheromone>();
@@ -54,11 +53,11 @@ public class AntMovement : MonoBehaviour
         }
         else {
             if (collider.TryGetComponent<Home>(out Home home)) {
-                _findTarget = true;
+                _target = collider.gameObject;
                 transform.rotation = Quaternion.FromToRotation(Vector3.up, collider.transform.position - transform.position);
                 _bestPheromoneDistance = -1f;
             }
-            if (_findTarget) 
+            if (_target != null) 
                 return;
             if (collider.gameObject.tag == "HomePheromone") {
                 Pheromone pheromone = collider.GetComponent<Pheromone>();
@@ -76,7 +75,7 @@ public class AntMovement : MonoBehaviour
             if (!_goHome) {
                 food.GetFood();
                 _goHome = true;
-                _findTarget = false;
+                _target = null;
                 _currentDistance = 0f;
             }
         }
@@ -84,7 +83,7 @@ public class AntMovement : MonoBehaviour
             if (_goHome) {
                 home.AddFood(1);
                 _goHome = false;
-                _findTarget = false;
+                _target = null;
                 _currentDistance = 0f;
             }
         }
